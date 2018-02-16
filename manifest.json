@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "Trailer Finder",
+  "description": "Simple chrome extension to fetch movie trailers.",
+  "version": "1.0.0",
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "background": {
+    "scripts": ["bg.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+  {
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": ["inject.js"],
+    "css": ["inject.css"],
+    "run_at": "document_end"
+  }
+  ],
+  "permissions": [
+    "contextMenus"
+  ]
+}
