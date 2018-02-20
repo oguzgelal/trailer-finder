@@ -12,11 +12,36 @@ const loadEnvFile = () => new Promise(resolve => {
   }
 })
 
+const search = (txt) =>
+  new Promise((resolve, reject) => {
+    const params = {
+      key: env.YOUTUBE_API_KEY,
+      type: 'video',
+      part: 'id',
+      q: txt,
+    }
+
+    const q = Object.keys(params)
+      .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+      .join('&')
+
+    fetch(`${env.YOUTUBE_BASE}/search?${q}`)
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject)
+  })
+
 // Find trailer button clicked
 const init = (selectionText) => {
   loadEnvFile().then(() => {
-    console.log(env);
-    alert(selectionText)
+    search(`${selectionText} trailer`).then(res => {
+      if (res.items && res.items.length > 0){
+
+      } else {
+        // TODO
+        console.log('No videos found');
+      }
+    })
   })
 }
 
